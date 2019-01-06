@@ -1,6 +1,6 @@
 # React Native Swipe Item
 
-A swipe item for react-native. Supports both iOS and Android.
+A swipe item for react-native. Support both iOS and Android.
 
 <img src="https://raw.githubusercontent.com/ambisign-gavin/react-native-swipe-item/master/ios-demo.gif" width="310">
 
@@ -16,7 +16,7 @@ npm i --save react-native-swipe-item
 
 ## Usage
 
-You can use the `SwipeButtonsContainer` to wrap buttons that you want to show when user swipe the item, and pass it to props.
+You can use the `SwipeButtonsContainer` to wrap buttons that you want to show when users swipe the item, and pass it to props.
 
 ```javascript
 import { SwipeItem, SwipeButtonsContainer } from 'react-native-swipe-item';
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
 
 <a id="leftButtons">**`leftButtons`**</a>
 
-Buttons that want to show on the left when the item swipe to right.
+Buttons that want to show on the left when the item swiped to right.
 
 | TYPE | REQUIRED |
 | --- | --- |
@@ -138,7 +138,7 @@ Buttons that want to show on the left when the item swipe to right.
 
 <a id="rightButtons">**`rightButtons`**</a>
 
-Buttons that want to show on the right when the item swipe to left.
+Buttons that want to show on the right when the item swiped to left.
 
 | TYPE | REQUIRED |
 | --- | --- |
@@ -150,7 +150,7 @@ Buttons that want to show on the right when the item swipe to left.
 
 The component for the swipe item.
 
-*   *Before RN 0.57.0 the child view would be clipped by parent view when the child view layout out of the parent. Recommend to use [ViewOverflow](https://github.com/entria/react-native-view-overflow) plugin to solve this problem.*
+*   *Before RN 0.57.0, the child view would be clipped by parent view when the child view layout out of the parent. Recommend to use [ViewOverflow](https://github.com/entria/react-native-view-overflow) plugin to solve this problem.*
 
 Example:
 
