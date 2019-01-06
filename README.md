@@ -2,10 +2,15 @@
 
 A swipe item for react-native. Supports both iOS and Android.
 
-<img src="/ios-demo.gif" width="310">
-&nbsp;&nbsp;
-<img src="/android-demo.gif" width="310">
+<img src="/ios-demo.gif" width="310">&nbsp;&nbsp;<img src="/android-demo.gif" width="310">
 
+## Installation
+
+```sh
+
+npm i --save react-native-swipe-item
+
+```
 
 ## Usage
 
