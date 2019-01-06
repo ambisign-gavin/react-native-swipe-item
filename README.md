@@ -2,7 +2,9 @@
 
 A swipe item for react-native. Supports both iOS and Android.
 
-<img src="https://raw.githubusercontent.com/ambisign-gavin/react-native-swipe-item/master/ios-demo.gif" width="310">&nbsp;&nbsp;<img src="https://raw.githubusercontent.com/ambisign-gavin/react-native-swipe-item/master/android-demo.gif" width="310">
+<img src="https://raw.githubusercontent.com/ambisign-gavin/react-native-swipe-item/master/ios-demo.gif" width="310">
+
+<img src="https://raw.githubusercontent.com/ambisign-gavin/react-native-swipe-item/master/android-demo.gif" width="310">
 
 ## Installation
 
