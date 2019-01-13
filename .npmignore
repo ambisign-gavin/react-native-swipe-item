@@ -52,3 +52,5 @@ buck-out/
 */fastlane/Preview.html
 */fastlane/screenshots
 src
+android-demo.gif
+ios-demo.gif
