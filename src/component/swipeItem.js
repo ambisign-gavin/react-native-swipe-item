@@ -24,6 +24,7 @@ type Props = {
     onSwipeInitial?: (swipeItem: SwipeItem) => mixed,
     onLeftButtonsShowed?: (swipeItem: SwipeItem) => mixed,
     onRightButtonsShowed?: (swipeItem: SwipeItem) => mixed,
+    onButtonsClosed?: (swipeItem: SwipeItem) => mixed,
 }
 
 type States = {|
@@ -116,6 +117,9 @@ export default class SwipeItem extends React.Component<Props, States> {
      * @param {number} panDistanceX the distance of x-axis for gesture
      */
     _moveToDestination(toX: number) {
+        if (Math.round(toX) === 0) {
+            this.props.onButtonsClosed && this.props.onButtonsClosed(this._swipeItem);
+        }
         //Merges the offset value into the base value and resets the offset to zero.
         this.state.panDistance.flattenOffset();
         Animated.spring(this.state.panDistance, {
