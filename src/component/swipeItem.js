@@ -21,7 +21,9 @@ type Props = {
     leftButtons?: Element<typeof SwipeButtonsContainer>,
     rightButtons?: Element<typeof SwipeButtonsContainer>,
     containerView?: ComponentType<*>,
-    onSwipeInitial?: () => mixed,
+    onSwipeInitial?: (swipeItem: SwipeItem) => mixed,
+    onLeftButtonsShowed?: (swipeItem: SwipeItem) => mixed,
+    onRightButtonsShowed?: (swipeItem: SwipeItem) => mixed,
 }
 
 type States = {|
@@ -34,6 +36,7 @@ declare var JSX: any;
 
 export default class SwipeItem extends React.Component<Props, States> {
 
+    _swipeItem: SwipeItem = this;
     _panResponder: PanResponder;
     _panDistanceOffset: {x: number, y: number} = {x: 0, y: 0};
 
@@ -69,7 +72,7 @@ export default class SwipeItem extends React.Component<Props, States> {
                 } = this._panDistanceOffset;
                 
                 if (Math.round(offsetX) === 0) {
-                    this.props.onSwipeInitial && this.props.onSwipeInitial();
+                    this.props.onSwipeInitial && this.props.onSwipeInitial(this._swipeItem);
                 }
                 return true;
             },
@@ -140,10 +143,12 @@ export default class SwipeItem extends React.Component<Props, States> {
 
         if (panSide === 'right' && containerOffset > leftButtonTriggerPosition) {
             toValueX = leftButtonTriggerPosition;
+            this.props.onLeftButtonsShowed && this.props.onLeftButtonsShowed(this._swipeItem);
         }
 
         if (panSide === 'left' && containerOffset < rightButtonTriggerPosition) {
             toValueX = rightButtonTriggerPosition;
+            this.props.onRightButtonsShowed && this.props.onRightButtonsShowed(this._swipeItem);
         }
 
         return toValueX;
@@ -239,6 +244,7 @@ export default class SwipeItem extends React.Component<Props, States> {
             style,
             swipeContainerStyle,
             containerView: ContainerView = View,
+            ...others
         } = this.props;
         
         return (
@@ -248,6 +254,7 @@ export default class SwipeItem extends React.Component<Props, States> {
                         style, 
                         containerStyles.rootContainer,
                     ]}
+                    {...others}
                 >
                     <View
                         style={[containerStyles.buttonsContainer]}
