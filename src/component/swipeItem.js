@@ -24,7 +24,7 @@ type Props = {
     onSwipeInitial?: (swipeItem: SwipeItem) => mixed,
     onLeftButtonsShowed?: (swipeItem: SwipeItem) => mixed,
     onRightButtonsShowed?: (swipeItem: SwipeItem) => mixed,
-    onButtonsClosed?: (swipeItem: SwipeItem) => mixed,
+    onMovedToOrigin?: (swipeItem: SwipeItem) => mixed,
 }
 
 type States = {|
@@ -118,7 +118,7 @@ export default class SwipeItem extends React.Component<Props, States> {
      */
     _moveToDestination(toX: number) {
         if (Math.round(toX) === 0) {
-            this.props.onButtonsClosed && this.props.onButtonsClosed(this._swipeItem);
+            this.props.onMovedToOrigin && this.props.onMovedToOrigin(this._swipeItem);
         }
         //Merges the offset value into the base value and resets the offset to zero.
         this.state.panDistance.flattenOffset();
@@ -252,7 +252,6 @@ export default class SwipeItem extends React.Component<Props, States> {
             style,
             swipeContainerStyle,
             containerView: ContainerView = View,
-            ...others
         } = this.props;
         
         return (
@@ -262,7 +261,6 @@ export default class SwipeItem extends React.Component<Props, States> {
                         style, 
                         containerStyles.rootContainer,
                     ]}
-                    {...others}
                 >
                     <View
                         style={[containerStyles.buttonsContainer]}
