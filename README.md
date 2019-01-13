@@ -6,6 +6,10 @@ A swipe item for react-native. Support both iOS and Android.
 
 <img src="https://raw.githubusercontent.com/ambisign-gavin/react-native-swipe-item/master/android-demo.gif" width="310">
 
+## Example
+
+See [react-native-swipe-item-demo](https://github.com/ambisign-gavin/react-native-swipe-item-demo).
+
 ## Installation
 
 ```sh
@@ -84,6 +88,14 @@ const styles = StyleSheet.create({
 * [rightButtons](#rightButtons)
 
 * [containerView](#containerView)
+
+* [onSwipeInitial](#onSwipeInitial)
+
+* [onLeftButtonsShowed](#onLeftButtonsShowed)
+
+* [onRightButtonsShowed](#onRightButtonsShowed)
+
+* [onMovedToOrigin](#onMovedToOrigin)
 
 <a id="style">**`style`**</a>
 
@@ -178,7 +190,41 @@ export default function SwipeButtonCustom() {
 | --- | --- | --- |
 | `ViewOverflow` | Yes | Android |
 
+---
 
+<a id="onSwipeInitial">**`onSwipeInitial`**</a>
+
+This prop will be called when the item started swipe from the origin position, and the `SwipeItem` reference passed as an argument.
+
+---
+
+<a id="onLeftButtonsShowed">**`onLeftButtonsShowed`**</a>
+
+This prop will be called when left buttons showed, and the `SwipeItem` reference passed as an argument.
+
+---
+
+<a id="onRightButtonsShowed">**`onRightButtonsShowed`**</a>
+
+This prop will be called when right buttons showed, and the `SwipeItem` reference passed as an argument.
+
+---
+
+<a id="onMovedToOrigin">**`onMovedToOrigin`**</a>
+
+This prop will be called when the item moved to the origin, and the `SwipeItem` reference passed as an argument.
+
+---
+
+### `SwipeItem` Methods
+
+* [close](#close)
+
+<a id="close">**`close`**</a>
+
+Close the swipe item.
+
+---
 
 ## License
 
