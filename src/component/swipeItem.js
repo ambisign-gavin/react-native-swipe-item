@@ -91,10 +91,10 @@ export default class SwipeItem extends React.Component<Props, States> {
                 ],
             ),
             onPanResponderRelease: (evt: GestureResponderEvent, gestureState: PanResponderGestureState) => {
-                this._moveToDestination(gestureState.dx);
+                this._moveToDestination(this._getSwipePositionDestinationValueX(gestureState.dx));
             },
             onPanResponderTerminate: (evt: GestureResponderEvent, gestureState: PanResponderGestureState) => {
-                this._moveToDestination(gestureState.dx);
+                this._moveToDestination(this._getSwipePositionDestinationValueX(gestureState.dx));
                 return true;  
             },
             onPanResponderTerminationRequest: (evt: GestureResponderEvent, gestureState: PanResponderGestureState) => {
@@ -115,12 +115,12 @@ export default class SwipeItem extends React.Component<Props, States> {
      * move the swipe component to destination
      * @param {number} panDistanceX the distance of x-axis for gesture
      */
-    _moveToDestination(panDistanceX: number) {
+    _moveToDestination(toX: number) {
         //Merges the offset value into the base value and resets the offset to zero.
         this.state.panDistance.flattenOffset();
         Animated.spring(this.state.panDistance, {
             toValue: {
-                x: this._getSwipePositionDestinationValueX(panDistanceX), 
+                x: toX, 
                 y: 0
             },
             friction: 10,
@@ -128,14 +128,7 @@ export default class SwipeItem extends React.Component<Props, States> {
     }
 
     close() {
-        this.state.panDistance.flattenOffset();
-        Animated.spring(this.state.panDistance, {
-            toValue: {
-                x: 0, 
-                y: 0
-            },
-            friction: 10,
-        }).start();
+        this._moveToDestination(0);
     }
 
     /**
