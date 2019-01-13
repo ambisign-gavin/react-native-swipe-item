@@ -21,6 +21,7 @@ type Props = {
     leftButtons?: Element<typeof SwipeButtonsContainer>,
     rightButtons?: Element<typeof SwipeButtonsContainer>,
     containerView?: ComponentType<*>,
+    onSwipeInitial?: () => mixed,
 }
 
 type States = {|
@@ -60,7 +61,17 @@ export default class SwipeItem extends React.Component<Props, States> {
     _createPanResponderInstance() : PanResponderInstance {
         let instance: PanResponderInstance = PanResponder.create({
             onMoveShouldSetPanResponderCapture: (evt: GestureResponderEvent, gestureState: PanResponderGestureState) => {
-                return Math.abs(gestureState.dx) > 5;
+                if (Math.abs(gestureState.dx) < 5) {
+                    return false;
+                }
+                const {
+                    x: offsetX
+                } = this._panDistanceOffset;
+                
+                if (Math.round(offsetX) === 0) {
+                    this.props.onSwipeInitial && this.props.onSwipeInitial();
+                }
+                return true;
             },
             onPanResponderGrant: (evt: GestureResponderEvent, gestureState: PanResponderGestureState) => {
                 //setting pan distance offset, make sure next touch will not jump to touch position immediately
