@@ -127,6 +127,17 @@ export default class SwipeItem extends React.Component<Props, States> {
         }).start();
     }
 
+    close() {
+        this.state.panDistance.flattenOffset();
+        Animated.spring(this.state.panDistance, {
+            toValue: {
+                x: 0, 
+                y: 0
+            },
+            friction: 10,
+        }).start();
+    }
+
     /**
      * get the Swipe component's position after user release gesture
      * @param {number} panDistanceX
