@@ -114,7 +114,7 @@ export default class SwipeItem extends React.Component<Props, States> {
 
     /**
      * move the swipe component to destination
-     * @param {number} panDistanceX the distance of x-axis for gesture
+     * @param {number} toX the x-axis of move destination
      */
     _moveToDestination(toX: number) {
         if (Math.round(toX) === 0) {
@@ -137,7 +137,7 @@ export default class SwipeItem extends React.Component<Props, States> {
 
     /**
      * get the Swipe component's position after user release gesture
-     * @param {number} panDistanceX
+     * @param {number} panDistanceX the distance of x-axis for gesture
      */
     _getSwipePositionDestinationValueX(panDistanceX: number): number {
         const {
