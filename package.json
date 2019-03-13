@@ -1,8 +1,9 @@
 {
 	"name": "react-native-swipe-item",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"description": "The swipeale item for react-native",
 	"main": "dist/index.js",
+	"type": "index.d.ts",
 	"scripts": {
 		"clean": "rimraf dist",
 		"build:es5": "babel src -d dist",
