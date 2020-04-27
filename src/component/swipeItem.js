@@ -25,6 +25,7 @@ type Props = {
     onLeftButtonsShowed?: (swipeItem: SwipeItem) => mixed,
     onRightButtonsShowed?: (swipeItem: SwipeItem) => mixed,
     onMovedToOrigin?: (swipeItem: SwipeItem) => mixed,
+    disableSwipeIfNoButton: Boolean;
 }
 
 type States = {|
@@ -40,6 +41,8 @@ export default class SwipeItem extends React.Component<Props, States> {
     _swipeItem: SwipeItem = this;
     _panResponder: PanResponder;
     _panDistanceOffset: {x: number, y: number} = {x: 0, y: 0};
+    _isRightButtonShowing = false;
+    _isLeftButtonShowing = false;
 
     state: States = {
         panDistance: new Animated.ValueXY(),
@@ -67,6 +70,12 @@ export default class SwipeItem extends React.Component<Props, States> {
             onMoveShouldSetPanResponderCapture: (evt: GestureResponderEvent, gestureState: PanResponderGestureState) => {
                 if (Math.abs(gestureState.dx) < 5) {
                     return false;
+                }
+                if (this.props.disableSwipeIfNoButton) {
+                    if ((!this.props.leftButtons && gestureState.dx > 0 && !this._isRightButtonShowing)
+                        || (!this.props.rightButtons && gestureState.dx < 0 && !this._isLeftButtonShowing)) {
+                        return false;
+                    }
                 }
                 const {
                     x: offsetX
@@ -118,6 +127,8 @@ export default class SwipeItem extends React.Component<Props, States> {
      */
     _moveToDestination(toX: number) {
         if (Math.round(toX) === 0) {
+            this._isLeftButtonShowing = false;
+            this._isRightButtonShowing = false;
             this.props.onMovedToOrigin && this.props.onMovedToOrigin(this._swipeItem);
         }
         //Merges the offset value into the base value and resets the offset to zero.
@@ -151,11 +162,13 @@ export default class SwipeItem extends React.Component<Props, States> {
 
         if (panSide === 'right' && containerOffset > leftButtonTriggerPosition) {
             toValueX = leftButtonTriggerPosition;
+            this._isLeftButtonShowing = true;
             this.props.onLeftButtonsShowed && this.props.onLeftButtonsShowed(this._swipeItem);
         }
 
         if (panSide === 'left' && containerOffset < rightButtonTriggerPosition) {
             toValueX = rightButtonTriggerPosition;
+            this._isRightButtonShowing = true;
             this.props.onRightButtonsShowed && this.props.onRightButtonsShowed(this._swipeItem);
         }
 

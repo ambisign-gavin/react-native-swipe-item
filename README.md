@@ -89,6 +89,8 @@ const styles = StyleSheet.create({
 
 * [containerView](#containerView)
 
+* [disableSwipeIfNoButton](#disableSwipeIfNoButton)
+
 * [onSwipeInitial](#onSwipeInitial)
 
 * [onLeftButtonsShowed](#onLeftButtonsShowed)
@@ -213,6 +215,18 @@ This prop will be called when right buttons showed, and the `SwipeItem` referenc
 <a id="onMovedToOrigin">**`onMovedToOrigin`**</a>
 
 This prop will be called when the item moved to the origin, and the `SwipeItem` reference passed as an argument.
+
+---
+
+<a id="disableSwipeIfNoButton">**`disableSwipeIfNoButton`**</a>
+
+`since v0.4`
+
+Disable the swipe feature when there are no buttons.
+
+| TYPE | REQUIRED |
+| --- | --- |
+| `boolean` | No |
 
 ---
 

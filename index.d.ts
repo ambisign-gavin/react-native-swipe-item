@@ -47,6 +47,10 @@ declare module 'react-native-swipe-item' {
          * will be triggered when the item moved to the origin position
          */
         onMovedToOrigin?: (swipeItem: SwipeItem) => void,
+        /**
+         * disable the swipe feature when there are no buttons.
+         */
+        disableSwipeIfNoButton?: boolean,
     }
     export class SwipeItem extends Component<SwipeItemProps, {}> {
         /**
