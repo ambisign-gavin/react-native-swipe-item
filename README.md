@@ -18,7 +18,7 @@ npm i --save react-native-swipe-item
 
 ```
 
-- **if you use react-native 0.62.0 and above, please install with `0.5.0`.**
+- **if you use react-native 0.62.0 or newer version, please install `0.5.0`.**
 
 ## Usage
 
