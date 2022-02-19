@@ -1,41 +1,41 @@
 {
-	"name": "react-native-swipe-item",
-	"version": "0.4.0",
-	"description": "The swipeale item for react-native",
-	"main": "dist/index.js",
-	"type": "index.d.ts",
-	"scripts": {
-		"clean": "rimraf dist",
-		"build:es5": "babel src -d dist",
-		"build:flow": "flow-copy-source -v src dist",
-		"prepublish": "npm run clean && npm run build:es5 && npm run build:flow"
-	},
-	"peerDependencies": {
-		"react": ">=15.2.0",
-		"react-native": ">=0.46.0"
-	},
-	"devDependencies": {
-		"babel-cli": "^6.26.0",
-		"babel-core": "^6.26.3",
-		"babel-jest": "23.6.0",
-		"babel-plugin-transform-flow-strip-types": "^6.22.0",
-		"babel-preset-es2015": "^6.24.1",
-		"babel-preset-react-native": "4.0.1",
-		"babel-preset-stage-0": "^6.24.1",
-		"flow-bin": "^0.56.0",
-		"flow-copy-source": "^2.0.2",
-		"rimraf": "^2.6.2"
-	},
-	"license": "MIT",
-	"keywords": [
-		"react-component",
-		"react-native",
-		"swipe",
-		"swipe-item"
-	],
-	"author": "Gavin Wang <kuku8990@gmail.com> (https://github.com/ambisign-gavin)",
-	"repository": {
-		"type": "git",
-		"url": "git@github.com:ambisign-gavin/react-native-swipe-item.git"
-	}
+    "name": "react-native-swipe-item",
+    "version": "0.5.0",
+    "description": "The swipeale item for react-native",
+    "main": "dist/index.js",
+    "type": "index.d.ts",
+    "scripts": {
+        "clean": "rimraf dist",
+        "build:es5": "babel src -d dist",
+        "build:flow": "flow-copy-source -v src dist",
+        "prepublish": "npm run clean && npm run build:es5 && npm run build:flow"
+    },
+    "peerDependencies": {
+        "react": ">=16.11.0",
+        "react-native": ">=0.62.0"
+    },
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-core": "^6.26.3",
+        "babel-jest": "23.6.0",
+        "babel-plugin-transform-flow-strip-types": "^6.22.0",
+        "babel-preset-es2015": "^6.24.1",
+        "babel-preset-react-native": "4.0.1",
+        "babel-preset-stage-0": "^6.24.1",
+        "flow-bin": "^0.113.0",
+        "flow-copy-source": "^2.0.2",
+        "rimraf": "^2.6.2"
+    },
+    "license": "MIT",
+    "keywords": [
+        "react-component",
+        "react-native",
+        "swipe",
+        "swipe-item"
+    ],
+    "author": "Gavin Wang <kuku8990@gmail.com> (https://github.com/ambisign-gavin)",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:ambisign-gavin/react-native-swipe-item.git"
+    }
 }
