@@ -86,11 +86,19 @@ const styles = StyleSheet.create({
 
 ## Components
 
-* [SwipeProvider](#SwipeProvider)
+* **SwipeProvider**
 
-* [SwipeItem](#SwipeItem)
+    - [props](#SwipeProvider)
 
-* [SwipeButtonsContainer](#SwipeButtonsContainer)
+* **SwipeItem**
+
+    - [props](#SwipeItem)
+    
+    - [ref methods](#SwipeItemRefMethods)
+
+* **SwipeButtonsContainer**
+
+    - [props](#SwipeButtonsContainer)
 
 
 ### `SwipeProvider` Props<a id='SwipeProvider'></a>
@@ -281,7 +289,7 @@ Disable the swipe feature when there are no buttons.
 
 ---
 
-### `SwipeItem` Ref Methods
+### `SwipeItem` Ref Methods<a id="SwipeItemRefMethods"></a>
 
 * [close](#close)
 
