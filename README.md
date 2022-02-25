@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
 
 ## Components
 
-* **SwipeProvider**
+* **SwipeProvider** `since v0.6.0`
 
     - [props](#SwipeProvider)
 
