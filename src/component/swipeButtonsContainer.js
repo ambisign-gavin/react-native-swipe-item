@@ -12,7 +12,7 @@ export default class SwipeButtonsContainer extends React.Component<Props> {
         const { style, children, ...other } = this.props;
 
         return (
-            <Animated.View style={style} {...other}>
+            <Animated.View {...other} style={style}>
                 {children}
             </Animated.View>
         );

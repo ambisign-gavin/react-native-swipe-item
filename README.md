@@ -25,7 +25,7 @@ npm i --save react-native-swipe-item
 You can use the `SwipeButtonsContainer` to wrap buttons that you want to show when users swipe the item, and pass it to props.
 
 ```javascript
-import { SwipeItem, SwipeButtonsContainer } from 'react-native-swipe-item';
+import { SwipeItem, SwipeButtonsContainer, SwipeProvider } from 'react-native-swipe-item';
 
 export default function SwipeButtonCustom() {
 
@@ -48,15 +48,20 @@ export default function SwipeButtonCustom() {
     );
   
     return (
-        <SwipeItem
-            style={styles.button}
-            swipeContainerStyle={styles.swipeContentContainerStyle}
-            leftButtons={leftButton}
-        >
-            <Text>
-                Swipe me!
-            </Text>
-        </SwipeItem>
+        <SwipeProvider>
+            <SwipeItem
+                style={styles.button}
+                swipeContainerStyle={styles.swipeContentContainerStyle}
+                leftButtons={leftButton}
+            >
+                <Text>
+                    Swipe me!
+                </Text>
+            </SwipeItem>
+            <SwipeItem>
+                ...
+            </SwipeItem>
+        </SwipeProvider>
     );
 }
 
@@ -79,7 +84,59 @@ const styles = StyleSheet.create({
 
 ```
 
-### `SwipeItem` Props
+## Components
+
+* **SwipeProvider**
+
+    - [props](#SwipeProvider)
+
+* **SwipeItem**
+
+    - [props](#SwipeItem)
+    
+    - [ref methods](#SwipeItemRefMethods)
+
+* **SwipeButtonsContainer**
+
+    - [props](#SwipeButtonsContainer)
+
+
+### `SwipeProvider` Props<a id='SwipeProvider'></a>
+
+* [mode](#SwipeProvider_mode)
+
+* [closeTrigger](#SwipeProvider_closeTrigger)
+
+<a id="SwipeProvider_mode">**`mode`**</a>
+
+Swipe items mode, default is `single`.
+
+| TYPE | REQUIRED |
+| --- | --- |
+| `single` \| `multiple` | No |
+
+* `single`:  only allow one swipe item to be opened. The opened swipe item would be automatically closed when the new swipe item triggers the close event. (see the [closeTrigger](#SwipeProvider_closeTrigger) prop for more detail.)
+
+* `multiple`:  allow multiple swipe items to be opened.
+
+---
+
+<a id="SwipeProvider_closeTrigger">**`closeTrigger`**</a>
+
+The trigger for automatically closed swipe item , only works when the mode prop is single, default is `onItemMoved`.
+
+| TYPE | REQUIRED |
+| --- | --- |
+| `onItemMoved` \| `onButtonShowed` | No |
+
+* `onItemMoved`: when the swipe item is moved, the opened one will be closed.
+
+* `onButtonShowed`: when the swipe item button is showing, the opened one will be closed.
+
+---
+
+
+### `SwipeItem` Props<a id='SwipeItem'></a>
 
 * [style](#style)
 
@@ -232,7 +289,7 @@ Disable the swipe feature when there are no buttons.
 
 ---
 
-### `SwipeItem` Methods
+### `SwipeItem` Ref Methods<a id="SwipeItemRefMethods"></a>
 
 * [close](#close)
 
@@ -240,7 +297,26 @@ Disable the swipe feature when there are no buttons.
 
 Close the swipe item.
 
+Example:
+
+```
+
+const itemRef = useRef(null);
+...
+itemRef.current.close();
+...
+<SwipeItem ref={itemRef} >
+    ...
+</SwipeItem>
+
+```
+
 ---
+
+### `SwipeButtonsContainer` Props<a id='SwipeButtonsContainer'></a>
+
+**This component extends react-native View props.**
+
 
 ## License
 

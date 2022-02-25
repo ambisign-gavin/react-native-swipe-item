@@ -2,55 +2,54 @@ declare module 'react-native-swipe-item' {
     import { ViewStyle, ViewProps } from 'react-native';
     import { Component, ReactChild, ReactNode } from 'react';
 
-    export class SwipeButtonsContainer extends Component<ViewProps, any> {
-    }
+    export class SwipeButtonsContainer extends Component<ViewProps, any> {}
 
     interface SwipeItemProps {
-        children?: ReactNode,
+        children?: ReactNode;
         /**
          * Swipe item layout style
          */
-        style?: ViewStyle,
+        style?: ViewStyle;
         /**
          * Swipe item style
          */
-        swipeContainerStyle?: ViewStyle,
+        swipeContainerStyle?: ViewStyle;
         /**
          * Buttons that want to show on the left when the item swiped to right.
          */
-        leftButtons?: ReactNode,
+        leftButtons?: ReactNode;
         /**
          * Buttons that want to show on the right when the item swiped to right.
          */
-        rightButtons?: ReactNode,
+        rightButtons?: ReactNode;
         /**
          * The component for the swipe item.
          * More Information: https://github.com/ambisign-gavin/react-native-swipe-item#containerView
          */
-        containerView?: ReactNode,
+        containerView?: ReactNode;
         /**
          * will be triggered when the item started swipe from the origin position
          * @param {SwipeItem} swipeItem SwipeItem reference
          */
-        onSwipeInitial?: (swipeItem: SwipeItem) => void,
+        onSwipeInitial?: (swipeItem: SwipeItem) => void;
         /**
          * will be triggered when left buttons showed
          * @param {SwipeItem} swipeItem SwipeItem reference
          */
-        onLeftButtonsShowed?: (swipeItem: SwipeItem) => void,
+        onLeftButtonsShowed?: (swipeItem: SwipeItem) => void;
         /**
          * will be triggered when right buttons showed
          * @param {SwipeItem} swipeItem SwipeItem reference
          */
-        onRightButtonsShowed?: (swipeItem: SwipeItem) => void,
+        onRightButtonsShowed?: (swipeItem: SwipeItem) => void;
         /**
          * will be triggered when the item moved to the origin position
          */
-        onMovedToOrigin?: (swipeItem: SwipeItem) => void,
+        onMovedToOrigin?: (swipeItem: SwipeItem) => void;
         /**
          * disable the swipe feature when there are no buttons.
          */
-        disableSwipeIfNoButton?: boolean,
+        disableSwipeIfNoButton?: boolean;
     }
     export class SwipeItem extends Component<SwipeItemProps, {}> {
         /**
@@ -58,4 +57,19 @@ declare module 'react-native-swipe-item' {
          */
         close(): void;
     }
+
+    interface SwipeProviderProps {
+        /**
+         * Swipe items mode, default is single
+         */
+        mode?: 'single' | 'multiple';
+        /**
+         * The trigger for automatically closed swipe item , default is onItemMoved
+         * `onItemMoved` - when the swipe item is moved, the opened one will be closed.
+         * `onButtonShowed` - when the swipe item button is showing, the opened one will be closed.
+         */
+        closeTrigger?: 'onItemMoved' | 'onButtonShowed';
+    }
+
+    export class SwipeProvider extends Component<SwipeProviderProps, {}> {}
 }
