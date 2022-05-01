@@ -1,6 +1,6 @@
 // @flow
 import React, { type Element, type ComponentType } from 'react';
-import { Animated, PanResponder, StyleSheet, View, Platform } from 'react-native';
+import { Animated, PanResponder, StyleSheet, View, Platform, I18nManager } from 'react-native';
 import type { PanResponderInstance } from 'react-native/Libraries/Interaction/PanResponder';
 import SwipeButtonsContainer from './swipeButtonsContainer';
 import { SwipeContext } from './swipeProvider';
@@ -268,14 +268,14 @@ export default class SwipeItem extends React.Component<Props, States> {
 
 const containerStyles = StyleSheet.create({
     rootContainer: {
-        flexDirection: 'row',
+        flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
         justifyContent: 'center',
     },
     buttonsContainer: {
         height: '100%',
         width: '100%',
         position: 'absolute',
-        flexDirection: 'row',
+        flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
         top: 0,
         left: 0,
     },
