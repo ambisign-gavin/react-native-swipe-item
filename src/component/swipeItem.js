@@ -3,7 +3,7 @@ import React, { type Element, type ComponentType } from 'react';
 import { Animated, PanResponder, StyleSheet, View, Platform, I18nManager } from 'react-native';
 import type { PanResponderInstance } from 'react-native/Libraries/Interaction/PanResponder';
 import SwipeButtonsContainer from './swipeButtonsContainer';
-import { SwipeContext } from './swipeProvider';
+import { SwipeContext } from './swipeContext';
 
 type Props = {
     children?: any,
@@ -51,7 +51,7 @@ export default class SwipeItem extends React.Component<Props, States> {
     }
 
     componentWillUnmount() {
-        this.context.removeOpenedItemRef(this);
+        this.context && this.context.removeOpenedItemRef(this);
         this.state.panDistance.removeAllListeners();
     }
 
@@ -77,7 +77,7 @@ export default class SwipeItem extends React.Component<Props, States> {
                 if (Math.round(offsetX) === 0) {
                     this.props.onSwipeInitial && this.props.onSwipeInitial(this._swipeItem);
 
-                    this.context.setOpenedItemRef(this, 'onItemMoved');
+                    this.context && this.context.setOpenedItemRef(this, 'onItemMoved');
                 }
                 return true;
             },
@@ -159,7 +159,7 @@ export default class SwipeItem extends React.Component<Props, States> {
             this._isLeftButtonShowing = true;
             this.props.onLeftButtonsShowed && this.props.onLeftButtonsShowed(this._swipeItem);
 
-            this.context.setOpenedItemRef(this, 'onButtonShowed');
+            this.context && this.context.setOpenedItemRef(this, 'onButtonShowed');
         }
 
         if (panSide === 'left' && containerOffset < rightButtonTriggerPosition && !!this.props.rightButtons) {
@@ -167,7 +167,7 @@ export default class SwipeItem extends React.Component<Props, States> {
             this._isRightButtonShowing = true;
             this.props.onRightButtonsShowed && this.props.onRightButtonsShowed(this._swipeItem);
 
-            this.context.setOpenedItemRef(this, 'onButtonShowed');
+            this.context && this.context.setOpenedItemRef(this, 'onButtonShowed');
         }
 
         return toValueX;
