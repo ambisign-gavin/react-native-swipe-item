@@ -1,23 +1,7 @@
 // @flow
 import React from 'react';
-import SwipeItem from './swipeItem';
-
-type ItemCloseTrigger = 'onItemMoved' | 'onButtonShowed';
-type SwipeMode = 'single' | 'multiple';
-
-type SwipeContextType = {
-    mode: SwipeMode,
-    closeTrigger: ItemCloseTrigger,
-    setOpenedItemRef: (ref: SwipeItem, trigger: ItemCloseTrigger) => void,
-    removeOpenedItemRef: (ref: SwipeItem) => void,
-};
-
-export const SwipeContext = React.createContext<SwipeContextType>({
-    mode: 'single',
-    closeTrigger: 'onItemMoved',
-    setOpenedItemRef: () => {},
-    removeOpenedItemRef: () => {},
-});
+import type { SwipeItemRef, ItemCloseTrigger, SwipeMode, SwipeContextType } from './swipeContext';
+import { SwipeContext } from './swipeContext';
 
 type ProviderProps = {
     mode?: SwipeMode,
@@ -27,7 +11,7 @@ type ProviderProps = {
 const SwipeProvider = React.memo<ProviderProps>((props) => {
     const { mode = 'single', closeTrigger = 'onItemMoved', ...others } = props;
 
-    const openedItemRef = React.useRef<SwipeItem | null>(null);
+    const openedItemRef = React.useRef<SwipeItemRef | null>(null);
 
     const value = React.useMemo(
         () => ({
