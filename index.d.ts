@@ -50,6 +50,20 @@ declare module 'react-native-swipe-item' {
          * disable the swipe feature when there are no buttons.
          */
         disableSwipeIfNoButton?: boolean;
+        /**
+         * The swipe item will be opened automatically when the position pass the threshold, and you can set the left and right buttons separately.
+         */
+        swipeThreshold?: {
+            left?: number;
+            right?: number;
+        };
+        /**
+         * you can disabled left or right or both button scale when swiping.
+         */
+        disableButtonScale?: {
+            left?: boolean;
+            right?: boolean;
+        };
     }
     export class SwipeItem extends Component<SwipeItemProps, {}> {
         /**

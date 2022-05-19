@@ -16,7 +16,15 @@ type Props = {
     onLeftButtonsShowed?: (swipeItem: SwipeItem) => mixed,
     onRightButtonsShowed?: (swipeItem: SwipeItem) => mixed,
     onMovedToOrigin?: (swipeItem: SwipeItem) => mixed,
-    disableSwipeIfNoButton: Boolean,
+    disableSwipeIfNoButton: boolean,
+    swipeThreshold?: {
+        left?: number,
+        right?: number,
+    },
+    disableButtonScale?: {
+        left?: boolean,
+        right?: boolean,
+    },
 };
 
 type States = {|
@@ -35,6 +43,7 @@ export default class SwipeItem extends React.Component<Props, States> {
     _panDistanceOffset: { x: number, y: number } = { x: 0, y: 0 };
     _isRightButtonShowing = false;
     _isLeftButtonShowing = false;
+    _isGestureDisabled = false;
 
     state: States = {
         panDistance: new Animated.ValueXY(),
@@ -72,6 +81,7 @@ export default class SwipeItem extends React.Component<Props, States> {
                         return false;
                     }
                 }
+                this._isGestureDisabled = false;
                 const { x: offsetX } = this._panDistanceOffset;
 
                 if (Math.round(offsetX) === 0) {
@@ -87,22 +97,79 @@ export default class SwipeItem extends React.Component<Props, States> {
                 //initial panDistance
                 this.state.panDistance.setValue({ x: 0, y: 0 });
             },
-            onPanResponderMove: Animated.event(
-                [
-                    null,
-                    {
-                        dx: this.state.panDistance.x,
-                    },
-                ],
-                {
-                    useNativeDriver: false,
+            onPanResponderMove: (evt, gestureState) => {
+                if (this._isGestureDisabled) {
+                    return;
                 }
-            ),
+                const {
+                    swipeThreshold = {
+                        right: Infinity,
+                        left: Infinity,
+                    },
+                } = this.props;
+
+                const dx = gestureState.dx;
+
+                if (
+                    dx > 0 &&
+                    dx > swipeThreshold.left &&
+                    dx < this.state.leftButtonTriggerPosition &&
+                    !this._isLeftButtonShowing
+                ) {
+                    this._isGestureDisabled = true;
+
+                    Animated.spring(this.state.panDistance, {
+                        useNativeDriver: false,
+                        toValue: {
+                            x: this.state.leftButtonTriggerPosition,
+                            y: 0,
+                        },
+                    }).start();
+
+                    this._openLeftButton();
+                    return;
+                }
+                if (
+                    dx < 0 &&
+                    Math.abs(dx) > swipeThreshold.right &&
+                    Math.abs(dx) < Math.abs(this.state.rightButtonTriggerPosition) &&
+                    !this._isRightButtonShowing
+                ) {
+                    this._isGestureDisabled = true;
+
+                    Animated.spring(this.state.panDistance, {
+                        useNativeDriver: false,
+                        toValue: {
+                            x: this.state.rightButtonTriggerPosition,
+                            y: 0,
+                        },
+                    }).start();
+
+                    this._openRightButton();
+                    return;
+                }
+
+                Animated.event(
+                    [
+                        null,
+                        {
+                            dx: this.state.panDistance.x,
+                        },
+                    ],
+                    {
+                        useNativeDriver: false,
+                    }
+                )(evt, gestureState);
+            },
             onPanResponderRelease: (evt, gestureState) => {
-                this._moveToDestination(this._getSwipePositionDestinationValueX(gestureState.dx));
+                if (!this._isGestureDisabled) {
+                    this._moveToDestination(this._getSwipePositionDestinationValueX(gestureState.dx));
+                }
             },
             onPanResponderTerminate: (evt, gestureState) => {
-                this._moveToDestination(this._getSwipePositionDestinationValueX(gestureState.dx));
+                if (!this._isGestureDisabled) {
+                    this._moveToDestination(this._getSwipePositionDestinationValueX(gestureState.dx));
+                }
                 return true;
             },
             onPanResponderTerminationRequest: (evt, gestureState) => {
@@ -125,6 +192,7 @@ export default class SwipeItem extends React.Component<Props, States> {
         if (Math.round(toX) === 0) {
             this._isLeftButtonShowing = false;
             this._isRightButtonShowing = false;
+            this.context && this.context.removeOpenedItemRef(this);
             this.props.onMovedToOrigin && this.props.onMovedToOrigin(this._swipeItem);
         }
         //Merges the offset value into the base value and resets the offset to zero.
@@ -143,6 +211,20 @@ export default class SwipeItem extends React.Component<Props, States> {
         this._moveToDestination(0);
     }
 
+    _openRightButton(): void {
+        this._isRightButtonShowing = true;
+        this.props.onRightButtonsShowed && this.props.onRightButtonsShowed(this._swipeItem);
+
+        this.context && this.context.setOpenedItemRef(this, 'onButtonShowed');
+    }
+
+    _openLeftButton(): void {
+        this._isLeftButtonShowing = true;
+        this.props.onLeftButtonsShowed && this.props.onLeftButtonsShowed(this._swipeItem);
+
+        this.context && this.context.setOpenedItemRef(this, 'onButtonShowed');
+    }
+
     /**
      * get the Swipe component's position after user release gesture
      * @param {number} panDistanceX the distance of x-axis for gesture
@@ -156,25 +238,18 @@ export default class SwipeItem extends React.Component<Props, States> {
 
         if (panSide === 'right' && containerOffset > leftButtonTriggerPosition && !!this.props.leftButtons) {
             toValueX = leftButtonTriggerPosition;
-            this._isLeftButtonShowing = true;
-            this.props.onLeftButtonsShowed && this.props.onLeftButtonsShowed(this._swipeItem);
-
-            this.context && this.context.setOpenedItemRef(this, 'onButtonShowed');
+            this._openLeftButton();
         }
 
         if (panSide === 'left' && containerOffset < rightButtonTriggerPosition && !!this.props.rightButtons) {
             toValueX = rightButtonTriggerPosition;
-            this._isRightButtonShowing = true;
-            this.props.onRightButtonsShowed && this.props.onRightButtonsShowed(this._swipeItem);
-
-            this.context && this.context.setOpenedItemRef(this, 'onButtonShowed');
+            this._openRightButton();
         }
-
         return toValueX;
     }
 
     _renderleftButtonsIfNotNull(): JSX.Element {
-        const { leftButtons = null } = this.props;
+        const { leftButtons = null, disableButtonScale = { left: false } } = this.props;
 
         const { leftButtonTriggerPosition } = this.state;
 
@@ -183,10 +258,12 @@ export default class SwipeItem extends React.Component<Props, States> {
         }
         const { style, children } = leftButtons.props;
 
-        let scale = this.state.panDistance.x.interpolate({
-            inputRange: [-Infinity, -0.01, 0, leftButtonTriggerPosition, Infinity],
-            outputRange: [0.01, 0.01, 0.7, 1, 1],
-        });
+        let scale = disableButtonScale.left
+            ? 1
+            : this.state.panDistance.x.interpolate({
+                  inputRange: [-Infinity, -0.01, 0, leftButtonTriggerPosition, Infinity],
+                  outputRange: [0.01, 0.01, 0.7, 1, 1],
+              });
 
         let widthStyle = {
             transform: [{ scale }],
@@ -207,7 +284,7 @@ export default class SwipeItem extends React.Component<Props, States> {
     }
 
     _renderrightButtonsIfNotNull(): JSX.Element {
-        const { rightButtons = null } = this.props;
+        const { rightButtons = null, disableButtonScale = { right: false } } = this.props;
 
         const { rightButtonTriggerPosition } = this.state;
 
@@ -217,10 +294,12 @@ export default class SwipeItem extends React.Component<Props, States> {
 
         const { style, children } = rightButtons.props;
 
-        let scale = this.state.panDistance.x.interpolate({
-            inputRange: [-Infinity, rightButtonTriggerPosition, 0, 0.1, Infinity],
-            outputRange: [1, 1, 0.7, 0.01, 0.01],
-        });
+        let scale = disableButtonScale.right
+            ? 1
+            : this.state.panDistance.x.interpolate({
+                  inputRange: [-Infinity, rightButtonTriggerPosition, 0, 0.1, Infinity],
+                  outputRange: [1, 1, 0.7, 0.01, 0.01],
+              });
 
         let widthStyle = {
             transform: [{ scale }],

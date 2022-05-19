@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
 
     - [props](#SwipeButtonsContainer)
 
+------
 
 ### `SwipeProvider` Props<a id='SwipeProvider'></a>
 
@@ -149,6 +150,10 @@ The trigger for automatically closed swipe item , only works when the mode prop 
 * [containerView](#containerView)
 
 * [disableSwipeIfNoButton](#disableSwipeIfNoButton)
+
+* [swipeThreshold](#swipeThreshold)
+
+* [disableButtonScale](#disableButtonScale)
 
 * [onSwipeInitial](#onSwipeInitial)
 
@@ -286,6 +291,31 @@ Disable the swipe feature when there are no buttons.
 | TYPE | REQUIRED |
 | --- | --- |
 | `boolean` | No |
+
+---
+
+<a id="swipeThreshold">**`swipeThreshold`**</a>
+
+`since v0.7`
+
+The swipe item will be opened automatically when the position pass the threshold, and you can set the left and right buttons separately.
+
+| TYPE | REQUIRED |
+| --- | --- |
+| `{ left?: number, right?: number }` | No |
+
+---
+
+<a id="disableButtonScale">**`disableButtonScale`**</a>
+
+`since v0.7`
+
+You can disabled left or right or both button scale when swiping.
+
+| TYPE | REQUIRED |
+| --- | --- |
+| `{ left?: boolean, right?: boolean }` | No |
+
 
 ---
 
